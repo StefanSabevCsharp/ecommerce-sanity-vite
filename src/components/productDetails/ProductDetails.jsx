@@ -3,43 +3,46 @@ import { client, urlFor } from "../../lib/client"
 import { useGetProducts, useGetSingleProduct } from "../../hooks/useGetProducts";
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Product from "../product/Product";
+import { useState } from "react";
 
 
 
 export default function ProductDetails() {
+    const [index,setIndex] = useState(0);
     const { slugName } = useParams();
-    const [product, isLoading] = useGetSingleProduct(slugName);
-    const {products} = useGetProducts();
+    const [product, isLoadingSingleImage] = useGetSingleProduct(slugName);
+    const [products,isLoading] = useGetProducts();
     const { image, name, price, details } = product;
     console.log(product)
 
     return (
         <>
-            {isLoading ? (
+            {isLoadingSingleImage && isLoading ? (
                 <div>Loading...</div>
             ) : (
                 <div>
                     <div className="product-detail-container">
                         <div>
                             <div className="image-container">
-                                <img src={urlFor(image && image[0])} alt="product" />
+                                <img src={urlFor(image && image[index])} alt="product" className="product-detail-image" />
                             </div>
-                            {/* <div className="small-images-container">
-                                {image && image.map((img, index) => (
+                            <div className="small-images-container">
+                                {image && image.map((img, i) => (
                                     <img
-                                        key={index}
+                                        key={i}
                                         src={urlFor(img)}
                                         alt="product"
-                                        className=""
-                                        onMouseEnter=""
+                                        className={i === index ? "small-image selected-image" : "small-image"}
+                                        onMouseEnter={() => setIndex(i)}
                                     />
                                 ))}
-                            </div> */}
+                            </div>
                         </div>
                         <div className="product-detail-desc">
                             <h1>{name}</h1>
                             <div className="reviews">
                                 <div>
+                                    //todo: add dinamic rating
                                     <AiFillStar />
                                     <AiFillStar />
                                     <AiFillStar />
@@ -72,15 +75,14 @@ export default function ProductDetails() {
                         </div>
 
                     </div>
-                   <div className="maylike-products-wrapper">
+                   <div className="maylike-products-wrapper ">
                      <h2>You may also like</h2>
                      <div className="marquee">
-                        <div className="maylike-products-container">
+                        <div className="maylike-products-container track">
                             {products.map((product,index) => (
                                <Product key={index} product={product} />
                             ))}
                         </div>
-
                      </div>
                    </div>
                 </div>

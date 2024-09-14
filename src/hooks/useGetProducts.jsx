@@ -24,23 +24,23 @@ export const useGetProducts = () => {
 
     }, [])
 
-    return { products, banner, isLoading }
+    return [products, banner, isLoading ] 
 
 
 }
 
 export const useGetSingleProduct = (slug) => {
     const [product, setProduct] = useState({})
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoadingSingleImage, setIsLoadingSingleImage] = useState(true)
 
     useEffect(() => {
-        setIsLoading(true)
+        setIsLoadingSingleImage(true)
         try {
             const getData = async () => {
                 const productsData = await fetchSingleProduct(slug);
                 console.log(productsData)
                 setProduct(productsData);
-                setIsLoading(false)
+                setIsLoadingSingleImage(false)
             }
             getData();
         } catch (error) {
@@ -49,5 +49,5 @@ export const useGetSingleProduct = (slug) => {
 
     }, [slug])
 
-    return [product, isLoading]
+    return [product, isLoadingSingleImage]
 }
