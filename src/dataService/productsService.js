@@ -21,3 +21,15 @@ export const fetchBanners = async () => {
         console.error(error)
     }
 }
+
+export const fetchSingleProduct = async (slug) => {
+    const query = `*[_type == "product" && slug.current == $slug][0]`;
+    const params = { slug };
+    try {
+      const product = await client.fetch(query, params);
+      return product;
+    } catch (error) {
+      //todo : handle error
+      console.error(error);
+    }
+  };
