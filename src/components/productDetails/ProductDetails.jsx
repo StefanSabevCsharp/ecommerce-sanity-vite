@@ -3,17 +3,19 @@ import { client, urlFor } from "../../lib/client"
 import { useGetProducts, useGetSingleProduct } from "../../hooks/useGetProducts";
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Product from "../product/Product";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../../context/StateContext";
 
 
 
 export default function ProductDetails() {
+    const {increaseQty,decreaseQty,qty,onAdd} = useContext(AppContext);
+    
     const [index,setIndex] = useState(0);
     const { slugName } = useParams();
     const [product, isLoadingSingleImage] = useGetSingleProduct(slugName);
     const [products,isLoading] = useGetProducts();
     const { image, name, price, details } = product;
-    console.log(product)
 
     return (
         <>
@@ -59,14 +61,14 @@ export default function ProductDetails() {
                             <div className="quantity">
                                 <h3>Quantity:</h3>
                                 <p className="quantity-desc">
-                                    <span className="minus" onClick=""><AiOutlineMinus /></span>
-                                    <span className="num" onClick="">0</span>
-                                    <span className="plus" onClick=""><AiOutlinePlus /></span>
+                                    <span className="minus" onClick={decreaseQty}><AiOutlineMinus /></span>
+                                    <span className="num" onClick="">{qty}</span>
+                                    <span className="plus" onClick={increaseQty}><AiOutlinePlus /></span>
                                 </p>
                             </div>
                             <div className="buttons">
                                 <button type="button" className="add-to-cart"
-                                onClick="">Add to Cart</button>
+                                onClick={() => onAdd(product,qty)}>Add to Cart</button>
                                 <button type="button" className="buy-now"
                                 onClick="">Buy Now</button>
 
