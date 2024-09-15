@@ -3,19 +3,31 @@ import { client, urlFor } from "../../lib/client"
 import { useGetProducts, useGetSingleProduct } from "../../hooks/useGetProducts";
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Product from "../product/Product";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../context/StateContext";
 
 
 
 export default function ProductDetails() {
-    const {increaseQty,decreaseQty,qty,onAdd} = useContext(AppContext);
-    
-    const [index,setIndex] = useState(0);
+    const { onAdd } = useContext(AppContext);
+    const [index, setIndex] = useState(0);
+    const [localQty, setLocalQty] = useState(1);
     const { slugName } = useParams();
     const [product, isLoadingSingleImage] = useGetSingleProduct(slugName);
-    const [products,isLoading] = useGetProducts();
+    const [products, isLoading] = useGetProducts();
     const { image, name, price, details } = product;
+
+    useEffect(() => {
+        setLocalQty(1);
+    }, [product]);
+
+    const increaseLocalQty = () => {
+        setLocalQty((prevQty) => prevQty + 1);
+    };
+
+    const decreaseLocalQty = () => {
+        setLocalQty((prevQty) => prevQty > 1 ? prevQty - 1 : 1);
+    };
 
     return (
         <>
@@ -44,7 +56,7 @@ export default function ProductDetails() {
                             <h1>{name}</h1>
                             <div className="reviews">
                                 <div>
-                                    //todo: add dinamic rating
+                                    {/* //todo: add dinamic rating */}
                                     <AiFillStar />
                                     <AiFillStar />
                                     <AiFillStar />
@@ -61,32 +73,32 @@ export default function ProductDetails() {
                             <div className="quantity">
                                 <h3>Quantity:</h3>
                                 <p className="quantity-desc">
-                                    <span className="minus" onClick={decreaseQty}><AiOutlineMinus /></span>
-                                    <span className="num" onClick="">{qty}</span>
-                                    <span className="plus" onClick={increaseQty}><AiOutlinePlus /></span>
+                                    <span className="minus" onClick={decreaseLocalQty}><AiOutlineMinus /></span>
+                                    <span className="num" onClick="">{localQty}</span>
+                                    <span className="plus" onClick={increaseLocalQty}><AiOutlinePlus /></span>
                                 </p>
                             </div>
                             <div className="buttons">
                                 <button type="button" className="add-to-cart"
-                                onClick={() => onAdd(product,qty)}>Add to Cart</button>
+                                    onClick={() => onAdd(product, localQty)}>Add to Cart</button>
                                 <button type="button" className="buy-now"
-                                onClick="">Buy Now</button>
+                                    onClick="">Buy Now</button>
 
                             </div>
 
                         </div>
 
                     </div>
-                   <div className="maylike-products-wrapper ">
-                     <h2>You may also like</h2>
-                     <div className="marquee">
-                        <div className="maylike-products-container track">
-                            {products.map((product,index) => (
-                               <Product key={index} product={product} />
-                            ))}
+                    <div className="maylike-products-wrapper ">
+                        <h2>You may also like</h2>
+                        <div className="marquee">
+                            <div className="maylike-products-container track">
+                                {products.map((product, index) => (
+                                    <Product key={index} product={product} />
+                                ))}
+                            </div>
                         </div>
-                     </div>
-                   </div>
+                    </div>
                 </div>
             )}
 

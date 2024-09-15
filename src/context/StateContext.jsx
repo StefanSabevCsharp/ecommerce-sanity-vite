@@ -8,7 +8,7 @@ export const StateProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
-    const [qty, setQty] = useState(1);
+    // const [qty, setQty] = useState(1);
 
     let foundProduct;
     let index;
@@ -40,7 +40,7 @@ export const StateProvider = ({ children }) => {
         foundProduct = cartItems.find((item) => item._id === id);
         index = cartItems.findIndex((product) => product._id === id);
     
-        const updatedCartItems = [...cartItems]; // Create a copy of the cartItems array
+        const updatedCartItems = [...cartItems]; 
     
         if (value === "inc") {
             updatedCartItems[index] = {
@@ -73,17 +73,17 @@ export const StateProvider = ({ children }) => {
     }
     
 
-    const increaseQty = () => {
-        setQty((prevQty) => prevQty + 1);
-    }
-    const decreaseQty = () => {
-        setQty((prevQty) => {
-            if (prevQty - 1 < 1) {
-                return 1;
-            }
-            return prevQty - 1
-        });
-    }
+    // const increaseQty = () => {
+    //     setQty((prevQty) => prevQty + 1);
+    // }
+    // const decreaseQty = () => {
+    //     setQty((prevQty) => {
+    //         if (prevQty - 1 < 1) {
+    //             return 1;
+    //         }
+    //         return prevQty - 1
+    //     });
+    // }
 
     return (
         <AppContext.Provider value={{
@@ -91,9 +91,9 @@ export const StateProvider = ({ children }) => {
             cartItems,
             totalPrice,
             totalQuantity,
-            qty,
-            increaseQty,
-            decreaseQty,
+            // qty,
+            // increaseQty,
+            // decreaseQty,
             onAdd,
             changeShowCart,
             toggleCartItemQuantity,
