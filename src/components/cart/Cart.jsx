@@ -9,7 +9,7 @@ import { AppContext } from "../../context/StateContext";
 
 export default function Cart() {
     const cartRef = useRef();
-    const { cartItems, totalPrice, totalQuantity, changeShowCart, decreaseQty, increaseQty, qty } = useContext(AppContext);
+    const { cartItems, totalPrice, totalQuantity, changeShowCart, decreaseQty, increaseQty, qty,toggleCartItemQuantity,onRemove } = useContext(AppContext);
     console.log(cartItems);
 
 
@@ -43,12 +43,12 @@ export default function Cart() {
                                 <div className="flex bottom">
                                     <div>
                                         <p className="quantity-desc">
-                                            <span className="minus" onClick=""><AiOutlineMinus /></span>
-                                            <span className="num" onClick="">0</span>
-                                            <span className="plus" onClick=""><AiOutlinePlus /></span>
+                                            <span className="minus" onClick={() => toggleCartItemQuantity(item._id,"dec")}><AiOutlineMinus /></span>
+                                            <span className="num" onClick="">{item.quantity}</span>
+                                            <span className="plus" onClick={() => toggleCartItemQuantity(item._id,"inc")}><AiOutlinePlus /></span>
                                         </p>
                                     </div>
-                                    <button type="button" className="remove-item" onClick=""><TiDeleteOutline></TiDeleteOutline></button>
+                                    <button type="button" className="remove-item" onClick={() => onRemove(item)}><TiDeleteOutline></TiDeleteOutline></button>
                                 </div>
 
                             </div>
