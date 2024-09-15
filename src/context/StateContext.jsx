@@ -10,6 +10,9 @@ export const StateProvider = ({ children }) => {
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [qty, setQty] = useState(1);
 
+    let foundProduct;
+    let index;
+
     const changeShowCart = () => {
         setShowCart((prevShowCart) => !prevShowCart);
     }
@@ -28,10 +31,47 @@ export const StateProvider = ({ children }) => {
             setCartItems(updatedCardItems);
         } else {
             product.quantity = quantity;
-            setCartItems([...cartItems,{...product}]);
+            setCartItems([...cartItems, { ...product }]);
         }
         toast.success(`${qty} ${product.name} added to cart`);
     }
+
+    const toggleCartItemQuantity = (id, value) => {
+        foundProduct = cartItems.find((item) => item._id === id);
+        index = cartItems.findIndex((product) => product._id === id);
+    
+        const updatedCartItems = [...cartItems]; // Create a copy of the cartItems array
+    
+        if (value === "inc") {
+            updatedCartItems[index] = {
+                ...foundProduct,
+                quantity: foundProduct.quantity + 1
+            };
+            setCartItems(updatedCartItems);
+            setTotalPrice((prevPrice) => prevPrice + foundProduct.price);
+            setTotalQuantity((prevQuantity) => prevQuantity + 1);
+        } else if (value === "dec") {
+            if (foundProduct.quantity > 1) {
+                updatedCartItems[index] = {
+                    ...foundProduct,
+                    quantity: foundProduct.quantity - 1
+                };
+                setCartItems(updatedCartItems);
+                setTotalPrice((prevPrice) => prevPrice - foundProduct.price);
+                setTotalQuantity((prevQuantity) => prevQuantity - 1);
+            }
+        }
+    };
+
+    const onRemove = (product) => {
+        const updatedCartItems = cartItems.filter((item) => item._id !== product._id);
+        setCartItems(updatedCartItems);
+        setTotalPrice((prevPrice) => prevPrice - product.price * product.quantity);
+        setTotalQuantity((prevQuantity) => prevQuantity - product.quantity);
+        toast.error(`${product.name} removed from cart`);
+
+    }
+    
 
     const increaseQty = () => {
         setQty((prevQty) => prevQty + 1);
@@ -56,6 +96,8 @@ export const StateProvider = ({ children }) => {
             decreaseQty,
             onAdd,
             changeShowCart,
+            toggleCartItemQuantity,
+            onRemove
         }}>
             {children}
         </AppContext.Provider>
