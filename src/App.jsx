@@ -8,12 +8,27 @@ import { useGetProducts } from "./hooks/useGetProducts"
 import ProductDetails from "./components/productDetails/ProductDetails"
 import {  StateProvider } from "./context/StateContext"
 import { Toaster } from "react-hot-toast";
+import { TiArrowMaximiseOutline } from "react-icons/ti"
 
 
 
 function App() {
 
   const [products, banner, isLoading] = useGetProducts();
+  // const testFunction = async () => {
+  //   const response = await fetch("http://localhost:3000/create-checkout-session", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ items: 1 }),
+  //   }
+  //   );
+  //   const data = await response.json();
+  //   console.log(data);
+  
+  // }
+  // testFunction();
 
   return (
     <StateProvider>

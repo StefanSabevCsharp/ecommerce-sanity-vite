@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { urlFor } from "../../lib/client";
 
 export default function HeroBanner({ banner }) {
-    console.log(banner)
+   
   return (
     <div className="hero-banner-container">
         <div>

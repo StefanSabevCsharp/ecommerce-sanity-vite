@@ -74,7 +74,7 @@ export default function ProductDetails() {
                                 <h3>Quantity:</h3>
                                 <p className="quantity-desc">
                                     <span className="minus" onClick={decreaseLocalQty}><AiOutlineMinus /></span>
-                                    <span className="num" onClick="">{localQty}</span>
+                                    <span className="num" >{localQty}</span>
                                     <span className="plus" onClick={increaseLocalQty}><AiOutlinePlus /></span>
                                 </p>
                             </div>
@@ -82,7 +82,7 @@ export default function ProductDetails() {
                                 <button type="button" className="add-to-cart"
                                     onClick={() => onAdd(product, localQty)}>Add to Cart</button>
                                 <button type="button" className="buy-now"
-                                    onClick="">Buy Now</button>
+                                    >Buy Now</button>
 
                             </div>
 

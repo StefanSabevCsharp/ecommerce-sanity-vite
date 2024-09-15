@@ -33,7 +33,7 @@ export const StateProvider = ({ children }) => {
             product.quantity = quantity;
             setCartItems([...cartItems, { ...product }]);
         }
-        toast.success(`${qty} ${product.name} added to cart`);
+        toast.success(`${product.name} added to cart`);
     }
 
     const toggleCartItemQuantity = (id, value) => {

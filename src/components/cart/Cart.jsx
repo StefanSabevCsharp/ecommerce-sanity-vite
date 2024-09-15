@@ -5,13 +5,29 @@ import { TiDeleteOutline } from "react-icons/ti";
 import toast from "react-hot-toast";
 import { urlFor } from "../../lib/client";
 import { AppContext } from "../../context/StateContext";
+import getStripe from "../../lib/getStripe";
 
 
 export default function Cart() {
     const cartRef = useRef();
-    const { cartItems, totalPrice, totalQuantity, changeShowCart, decreaseQty, increaseQty, qty,toggleCartItemQuantity,onRemove } = useContext(AppContext);
-    console.log(cartItems);
+    const { cartItems, totalPrice, totalQuantity, changeShowCart, toggleCartItemQuantity,onRemove } = useContext(AppContext);
 
+    const handleCheckout = async () => {
+        const stripe = await getStripe();
+        const response = await fetch("http://localhost:3000/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cartItems }),
+        });
+        if(response.statusCode === 500){
+            return;
+        }
+        const data = await response.json();
+        toast.loading("Redirecting to Stripe..."); 
+        stripe.redirectToCheckout({sessionId: data.id});
+    }
 
     return (
         <div className="cart-wrapper" ref={cartRef}>
@@ -44,7 +60,7 @@ export default function Cart() {
                                     <div>
                                         <p className="quantity-desc">
                                             <span className="minus" onClick={() => toggleCartItemQuantity(item._id,"dec")}><AiOutlineMinus /></span>
-                                            <span className="num" onClick="">{item.quantity}</span>
+                                            <span className="num" >{item.quantity}</span>
                                             <span className="plus" onClick={() => toggleCartItemQuantity(item._id,"inc")}><AiOutlinePlus /></span>
                                         </p>
                                     </div>
@@ -63,7 +79,7 @@ export default function Cart() {
                             <h3>${totalPrice}</h3>
                         </div>
                         <div className="btn-container">
-                            <button type="button" className="btn" onClick="">Pay with Stripe</button>
+                            <button type="button" className="btn" onClick={handleCheckout}>Pay with Stripe</button>
                         </div>
                     </div>
                 )}

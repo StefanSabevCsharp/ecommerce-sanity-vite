@@ -38,7 +38,6 @@ export const useGetSingleProduct = (slug) => {
         try {
             const getData = async () => {
                 const productsData = await fetchSingleProduct(slug);
-                console.log(productsData)
                 setProduct(productsData);
                 setIsLoadingSingleImage(false)
             }
