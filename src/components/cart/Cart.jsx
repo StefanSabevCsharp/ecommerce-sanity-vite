@@ -26,6 +26,7 @@ export default function Cart() {
         }
         const data = await response.json();
         toast.loading("Redirecting to Stripe..."); 
+        localStorage.setItem("session_id", data.id);
         stripe.redirectToCheckout({sessionId: data.id});
     }
 

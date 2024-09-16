@@ -8,13 +8,20 @@ export const StateProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
-    // const [qty, setQty] = useState(1);
+   
 
     let foundProduct;
     let index;
 
     const changeShowCart = () => {
         setShowCart((prevShowCart) => !prevShowCart);
+    }
+
+    const clearCartItems = () => {
+        setCartItems([]);
+        setTotalPrice(0);
+        setTotalQuantity(0);
+        localStorage.clear();
     }
 
     const onAdd = (product, quantity) => {
@@ -91,9 +98,7 @@ export const StateProvider = ({ children }) => {
             cartItems,
             totalPrice,
             totalQuantity,
-            // qty,
-            // increaseQty,
-            // decreaseQty,
+            clearCartItems,
             onAdd,
             changeShowCart,
             toggleCartItemQuantity,
