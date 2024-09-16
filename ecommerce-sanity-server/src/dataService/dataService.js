@@ -2,9 +2,9 @@ const { createClient } = require("@sanity/client");
 const { response } = require("express");
 
 const client = createClient({
-    projectId: "69060ayt",
-    dataset: "production",
-    apiVersion: "2021-10-21",
+    projectId: process.env.SANITY_PROJECT_ID,
+    dataset: process.env.SANITY_DATASET,
+    apiVersion: process.env.SANITY_API_VERSION,
     token: process.env.SANITY_TOKEN,
     useCdn: true,
 });
