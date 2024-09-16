@@ -14,7 +14,7 @@ export default function Cart() {
 
     const handleCheckout = async () => {
         const stripe = await getStripe();
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/create-checkout-session`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

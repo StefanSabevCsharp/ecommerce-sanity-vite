@@ -9,7 +9,7 @@ expressConfing(app);
 
  const YOUR_DOMAIN = process.env.CLIENT_URL;
 
-app.post("/create-checkout-session", async (req, res) => {
+app.post("/api/create-checkout-session", async (req, res) => {
     const { cartItems } = req.body;
     const lineItems = await Promise.all(cartItems.map(async (item) => {
         const product = await getProductById(item._id);
@@ -63,9 +63,8 @@ app.post("/create-checkout-session", async (req, res) => {
     }
 });
 
-app.get("/verify-session", async (req, res) => {
+app.get("/api/verify-session", async (req, res) => {
     const { session_id } = req.query;
-    console.log("session_id", session_id);
 
     try {
         const session = await stripe.checkout.sessions.retrieve(session_id);
@@ -84,3 +83,7 @@ async function start() {
 }
 
 start();
+
+module.exports = (req, res) => {
+    app(req, res);
+};

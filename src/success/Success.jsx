@@ -22,7 +22,7 @@ export default function Success() {
 
             try {
                 
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/verify-session?session_id=${sessionId}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/verify-session?session_id=${sessionId}`);
                 const data = await response.json();
 
                 if (data.success) {
