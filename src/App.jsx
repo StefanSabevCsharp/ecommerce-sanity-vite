@@ -38,9 +38,9 @@ function App() {
           </Route>
           <Route path="/products/:slugName" element={<ProductDetails />} />
           <Route path="/success" element={
-            
+            <SuccessGuard>
               <Success />
-            
+            </SuccessGuard>
           } />
           <Route path="*" element={<h1 style={{textAlign: "center"}}>Not Found</h1>} />
 
