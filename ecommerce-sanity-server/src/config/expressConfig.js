@@ -11,7 +11,7 @@ const corsOptions = {
 
 function expressConfing(app){
     app.use(express.static('public'));
-    app.use(cors(corsOptions));
+    app.use(cors());
     app.use(express.json());
     
 }
