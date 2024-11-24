@@ -2,7 +2,7 @@
 
 An e-commerce application built with React (using Vite), Express, and Sanity CMS. This project began with a Next.js 14 tutorial but has been extensively reworked to run on React Vite and Express.
 
-**[LINK TO THE PROJECT](http://ecommerce.stefansabev.com)**
+**[LINK TO THE PROJECT](https://ecommerce.stefansabev.com)**
 
 ---
 
